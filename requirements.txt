@@ -1,0 +1,6 @@
+protobuf
+google-api-python-client
+google-auth-oauthlib
+pydantic
+python-dotenv
+huggingface-hub>=0.23
