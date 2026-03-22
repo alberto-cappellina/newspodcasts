@@ -1,10 +1,12 @@
 from dataclasses import dataclass, field
 
+from core.common.podcast import Podcast
+
 
 @dataclass
 class Config:
     url1: str = ""
-    items: list[ItemConfig] = field(default_factory=list)
+    podcasts_config: list["PodcastConfig"] = field(default_factory=list)
 
 
 @dataclass
@@ -14,7 +16,6 @@ class FilterConfig:
 
 
 @dataclass
-class ItemConfig:
-    name: str = ""
-    label: str = ""
+class PodcastConfig:
+    podcast: Podcast
     filter: FilterConfig = field(default_factory=FilterConfig)

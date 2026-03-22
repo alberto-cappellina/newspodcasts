@@ -1,8 +1,10 @@
+from core.common.processing_file import ProcessingFile
 from core.file_operations.file_writer import write_string_temp_file
 from core.graph.state import NewsPodcastState
 from email_process.filtering.filter import filter_emails
 from email_process.gmail.gmail import get_service, list_emails, get_email_body
 from email_process.gmail.models import UnprocessedEmail
+
 
 # todo handle nothing to do
 def grab_emails(state: NewsPodcastState):
@@ -21,19 +23,24 @@ def grab_emails(state: NewsPodcastState):
     log_found_emails(filtered_emails)
 
     print(f'\n👩🏻‍💻 Processing emails')
-    files_path = []
+    files_to_process = []
     for filtered_email in filtered_emails:
         mail_content = get_email_body(service, filtered_email.message_id)
         file_path = write_string_temp_file(mail_content)
-        files_path.append(file_path)
 
-        print(f" - saved to {file_path}")
+        file = ProcessingFile(
+            path=file_path,
+            podcast_id=filtered_email.matching_podcast_id
+        )
+        files_to_process.append(file)
+
+        print(f" - saved to {file_path} for {filtered_email.matching_podcast_id}")
 
     # update the state adding
     # - all files created
     # - all files parsed (we keep them to archive them later)
 
-    return {**state, "mail_to_process": filtered_emails, "file_to_clean": files_path}
+    return {**state, "mail_to_process": filtered_emails, "file_to_clean": files_to_process}
 
 
 def log_found_emails(emails: list[UnprocessedEmail]):

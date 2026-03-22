@@ -30,8 +30,8 @@ def provide_graph():
 
 
     # START -> GRAB_EMAILS
-   # graph.add_edge(START, GraphNode.GRAB_EMAILS.value)
-    graph.add_edge(START,GraphNode.CONVERT_TEXT_FILES.value )
+    graph.add_edge(START, GraphNode.GRAB_EMAILS.value)
+    #graph.add_edge(START,GraphNode.CONVERT_TEXT_FILES.value )
 
     # GRAB_EMAILS -> CLEAN_EMAILS
     graph.add_edge(GraphNode.GRAB_EMAILS.value, GraphNode.CLEAN_EMAILS.value)

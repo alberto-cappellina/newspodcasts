@@ -1,13 +1,13 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
+from core.common.processing_file import ProcessingFile
 from core.environment import environment
 from core.file_operations.file_writer import read_file, write_string_temp_file
 from core.graph import NewsPodcastState
 
 
 def clean_emails(state: NewsPodcastState):
-
     print(f"\n🧹 Cleaning files")
 
     open_api_model = "gpt-4o"
@@ -20,8 +20,8 @@ def clean_emails(state: NewsPodcastState):
     files_to_clean = state["file_to_clean"]
     files_cleaned = []
     for file in files_to_clean:
-        print(f" - load file{file}")
-        file_content = read_file(file)
+        print(f" - load file{file.path}")
+        file_content = read_file(file.path)
 
         print(f" - invoke LLM to perform cleaning")
         result = llm.invoke([SystemMessage(content=cleaning_prompt), HumanMessage(content=file_content)])
@@ -31,7 +31,12 @@ def clean_emails(state: NewsPodcastState):
         cleaned_file_path = write_string_temp_file(clean_content)
         print(f"   > clean file wrote to {cleaned_file_path}")
 
-        files_cleaned.append(cleaned_file_path)
+        cleaned_file = ProcessingFile(
+            path=cleaned_file_path,
+            podcast_id=file.podcast_id
+        )
+
+        files_cleaned.append(cleaned_file)
 
     return {**state, "file_to_convert": files_cleaned}
 

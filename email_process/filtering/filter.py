@@ -1,5 +1,9 @@
+import logging
+
 from core.configuration.config import Config
 from email_process.gmail.models import UnprocessedEmail
+
+logger = logging.getLogger(__name__)
 
 
 def filter_emails(emails: list[UnprocessedEmail], config: Config) -> list[UnprocessedEmail]:
@@ -17,10 +21,17 @@ def filter_emails(emails: list[UnprocessedEmail], config: Config) -> list[Unproc
     """
     result = []
     for email in emails:
-        for item in config.items:
-            sender_match = all(s.lower() in (email.from_ or "").lower() for s in item.filter.sender)
-            title_match = item.filter.title.lower() in (email.subject or "").lower()
+        for podcast_config in config.podcasts_config:
+            sender_match = all(s.lower() in (email.from_ or "").lower() for s in podcast_config.filter.sender)
+            title_match = podcast_config.filter.title.lower() in (email.subject or "").lower()
             if sender_match and title_match:
+                logger.info(
+                    "Email matched podcast '%s': from='%s' subject='%s'",
+                    podcast_config.podcast.id,
+                    email.from_,
+                    email.subject,
+                )
+                email.matching_podcast_id = podcast_config.podcast.id
                 result.append(email)
                 break
     return result

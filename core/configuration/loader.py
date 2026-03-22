@@ -2,9 +2,8 @@ from pathlib import Path
 import yaml
 from dotenv import dotenv_values
 
-from .config import Config, FilterConfig, ItemConfig
-
-
+from .config import Config, FilterConfig, PodcastConfig
+from core.common.podcast import Podcast
 
 
 def load_config(path: str) -> Config:
@@ -20,15 +19,21 @@ def load_config(path: str) -> Config:
     if not isinstance(data, dict):
         raise ValueError(f"Configuration file must contain a YAML mapping, got: {type(data).__name__}")
     cfg = data.get("configuration", {})
-    items = [
-        ItemConfig(
-            name=item["name"],
-            label=item["label"],
+    podcasts = [
+        PodcastConfig(
+            podcast=Podcast(
+                id=item["id"],
+                title=item["title"],
+                link=item.get("link", ""),
+                language=item.get("language", ""),
+                author=item.get("author", ""),
+                category=item.get("category", ""),
+            ),
             filter=FilterConfig(
                 sender=[f] if isinstance(f := item.get("filter", {}).get("sender", []), str) else f,
                 title=item.get("filter", {}).get("title", ""),
             ),
         )
-        for item in data.get("items", [])
+        for item in data.get("podcasts_config", [])
     ]
-    return Config(url1=cfg.get("url1", ""), items=items)
+    return Config(url1=cfg.get("url1", ""), podcasts_config=podcasts)
