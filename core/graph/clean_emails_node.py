@@ -33,7 +33,7 @@ def clean_emails(state: NewsPodcastState):
 
         files_cleaned.append(cleaned_file_path)
 
-    return {**state, "file_to_converted": files_cleaned}
+    return {**state, "file_to_convert": files_cleaned}
 
 
 cleaning_prompt = """

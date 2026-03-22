@@ -15,4 +15,4 @@ class NewsPodcastState(TypedDict):
     file_to_clean: list[str]
 
     # this field will hold the list of files to be converted
-    file_to_converted: list[str]
+    file_to_convert: list[str]

@@ -1,9 +1,15 @@
 from dotenv import dotenv_values
 from pydantic import SecretStr
 
-def get_hf_token() -> str:
-    key = load_env_value('HF_TOKEN')
-    return key
+
+def get_aws_secret_access_key():
+    key = load_env_value('AWS_SECRET_ACCESS_KEY')
+    return SecretStr(key)
+
+
+def get_aws_access_key_id():
+    key = load_env_value('AWS_ACCESS_KEY_ID')
+    return SecretStr(key)
 
 
 def get_openapi_key():
