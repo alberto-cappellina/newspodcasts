@@ -7,6 +7,7 @@ from core.graph import NewsPodcastState, grab_emails
 from core.graph.clean_emails_node import clean_emails
 from core.graph.convert_text_to_mp3_node import convert_text_to_mp3
 from core.graph.nodes import GraphNode
+from core.graph.update_rss import update_rss
 
 
 def provide_graph() -> Any:
@@ -29,11 +30,13 @@ def provide_graph() -> Any:
     graph.add_node(GraphNode.GRAB_EMAILS.value, grab_emails)
     graph.add_node(GraphNode.CLEAN_EMAILS.value, clean_emails)
     graph.add_node(GraphNode.CONVERT_TEXT_FILES.value, convert_text_to_mp3)
+    graph.add_node(GraphNode.PUBLISH_MP3.value, update_rss)
 
 
     # START -> GRAB_EMAILS
     #graph.add_edge(START, GraphNode.GRAB_EMAILS.value)
-    graph.add_edge(START,GraphNode.CONVERT_TEXT_FILES.value )
+    #graph.add_edge(START,GraphNode.CONVERT_TEXT_FILES.value )
+    graph.add_edge(START,GraphNode.PUBLISH_MP3.value )
 
     # GRAB_EMAILS -> CLEAN_EMAILS
     graph.add_edge(GraphNode.GRAB_EMAILS.value, GraphNode.CLEAN_EMAILS.value)

@@ -36,4 +36,10 @@ def load_config(path: str) -> Config:
         )
         for item in data.get("podcasts_config", [])
     ]
-    return Config(url1=cfg.get("url1", ""), podcasts_config=podcasts)
+    return Config(
+        feed_url=cfg.get("feed_url", ""),
+        base_url=cfg.get("base_url", ""),
+        username=cfg.get("username", ""),
+        password=cfg.get("password", ""),
+        podcasts_config=podcasts,
+    )

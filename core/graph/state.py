@@ -17,3 +17,7 @@ class NewsPodcastState(TypedDict):
 
     # this field will hold the list of files to be converted
     file_to_convert: list[ProcessingFile]
+
+    # this field will hold the list of files to be converted
+    file_to_publish: list[ProcessingFile]
+

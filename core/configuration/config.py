@@ -5,7 +5,10 @@ from core.common.podcast import Podcast
 
 @dataclass
 class Config:
-    url1: str = ""
+    feed_url: str
+    base_url: str
+    username: str
+    password: str
     podcasts_config: list["PodcastConfig"] = field(default_factory=list)
 
 

@@ -30,11 +30,11 @@ def grab_emails(state: NewsPodcastState) -> dict:
 
         file = ProcessingFile(
             path=file_path,
-            podcast_id=filtered_email.matching_podcast_id
+            podcast=filtered_email.matching_podcast
         )
         files_to_process.append(file)
 
-        print(f" - saved to {file_path} for {filtered_email.matching_podcast_id}")
+        print(f" - saved to {file_path} for {filtered_email.matching_podcast.id}")
 
     # update the state adding
     # - all files created

@@ -47,7 +47,7 @@ def list_emails(service: Any, max_results: int = 10, query: str = "in:inbox") ->
             message_id=msg["id"],
             from_=from_email,
             subject=headers.get("Subject"),
-            matching_podcast_id=None
+            matching_podcast=None
         ))
     return emails
 

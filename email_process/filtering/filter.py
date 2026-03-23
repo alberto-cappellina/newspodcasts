@@ -31,7 +31,7 @@ def filter_emails(emails: list[UnprocessedEmail], config: Config) -> list[Unproc
                     email.from_,
                     email.subject,
                 )
-                email.matching_podcast_id = podcast_config.podcast.id
+                email.matching_podcast = podcast_config.podcast
                 result.append(email)
                 break
     return result

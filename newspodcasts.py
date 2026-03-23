@@ -1,3 +1,4 @@
+from core.common.podcast import Podcast
 from core.configuration.loader import load_config
 from core.graph.graph_provider import provide_graph
 
@@ -14,12 +15,19 @@ def main() -> None:
 
     # start
 
-    file_input = [{"path": '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art1.txt',
-                   "podcast_id": "outpost"
+    file_input = [{"path": '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/test.mp3',
+                   "podcast": Podcast(
+                       id="outpost",
+                       title="outpost",
+                       link="https://www.ilpost.it/tag/outpost/"
+                       , language="it",
+                       author="Daniele Raineri",
+                       category="news"
+                   )
                    }]
 
     graph.invoke(input={"config": config,
-                        "file_to_convert": file_input
+                             "file_to_publish": file_input
 
                         #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art2.txt',
                         #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art3.txt',
@@ -27,5 +35,6 @@ def main() -> None:
                         #  ]
                         })
 
-    if __name__ == "__main__":
-        main()
+
+if __name__ == "__main__":
+    main()

@@ -33,7 +33,7 @@ def clean_emails(state: NewsPodcastState) -> dict:
 
         cleaned_file = ProcessingFile(
             path=cleaned_file_path,
-            podcast_id=file.podcast_id
+            podcast=file.podcast
         )
 
         files_cleaned.append(cleaned_file)
