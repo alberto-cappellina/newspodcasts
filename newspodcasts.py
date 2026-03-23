@@ -10,18 +10,22 @@ def main() -> None:
     graph = provide_graph()
 
     # draw graph
-    #graph.get_graph().draw_mermaid_png(output_file_path='testing123.png')
+    # graph.get_graph().draw_mermaid_png(output_file_path='testing123.png')
 
     # start
+
+    file_input = [{"path": '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art1.txt',
+                   "podcast_id": "outpost"
+                   }]
+
     graph.invoke(input={"config": config,
-                    #    "file_to_convert": [
-                   #         '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art1.txt',
-                 #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art2.txt',
-                 #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art3.txt',
-                 #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art4.txt',
-                      #  ]
+                        "file_to_convert": file_input
+
+                        #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art2.txt',
+                        #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art3.txt',
+                        #           '/Users/albertocappellina/sources/trashcode/newspodcasts/temporary-work/art4.txt',
+                        #  ]
                         })
 
-
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()

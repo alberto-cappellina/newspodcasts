@@ -7,7 +7,7 @@ from email_process.gmail.models import UnprocessedEmail
 
 
 # todo handle nothing to do
-def grab_emails(state: NewsPodcastState):
+def grab_emails(state: NewsPodcastState) -> dict:
     service = get_service()
     configuration = state["config"]
 
@@ -43,6 +43,6 @@ def grab_emails(state: NewsPodcastState):
     return {**state, "mail_to_process": filtered_emails, "file_to_clean": files_to_process}
 
 
-def log_found_emails(emails: list[UnprocessedEmail]):
+def log_found_emails(emails: list[UnprocessedEmail]) -> None:
     for e in emails:
         print(f" - {e.from_} — {e.subject}")

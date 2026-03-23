@@ -1,6 +1,5 @@
 import base64
 import os
-from email.utils import parseaddr
 from typing import Any
 
 from google.auth.transport.requests import Request

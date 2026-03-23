@@ -2,17 +2,17 @@ from dotenv import dotenv_values
 from pydantic import SecretStr
 
 
-def get_aws_secret_access_key():
+def get_aws_secret_access_key() -> SecretStr:
     key = load_env_value('AWS_SECRET_ACCESS_KEY')
     return SecretStr(key)
 
 
-def get_aws_access_key_id():
+def get_aws_access_key_id() -> SecretStr:
     key = load_env_value('AWS_ACCESS_KEY_ID')
     return SecretStr(key)
 
 
-def get_openapi_key():
+def get_openapi_key() -> SecretStr:
     key = load_env_value('OPEN_API_KEY')
     return SecretStr(key)
 

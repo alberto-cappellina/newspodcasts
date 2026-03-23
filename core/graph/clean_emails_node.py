@@ -7,7 +7,7 @@ from core.file_operations.file_writer import read_file, write_string_temp_file
 from core.graph import NewsPodcastState
 
 
-def clean_emails(state: NewsPodcastState):
+def clean_emails(state: NewsPodcastState) -> dict:
     print(f"\n🧹 Cleaning files")
 
     open_api_model = "gpt-4o"

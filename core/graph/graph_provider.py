@@ -1,3 +1,5 @@
+from typing import Any
+
 from langgraph.constants import START, END
 from langgraph.graph import StateGraph
 
@@ -7,7 +9,7 @@ from core.graph.convert_text_to_mp3_node import convert_text_to_mp3
 from core.graph.nodes import GraphNode
 
 
-def provide_graph():
+def provide_graph() -> Any:
     """Build and compile the NewsPodcast LangGraph pipeline.
 
     Pipeline:
@@ -30,8 +32,8 @@ def provide_graph():
 
 
     # START -> GRAB_EMAILS
-    graph.add_edge(START, GraphNode.GRAB_EMAILS.value)
-    #graph.add_edge(START,GraphNode.CONVERT_TEXT_FILES.value )
+    #graph.add_edge(START, GraphNode.GRAB_EMAILS.value)
+    graph.add_edge(START,GraphNode.CONVERT_TEXT_FILES.value )
 
     # GRAB_EMAILS -> CLEAN_EMAILS
     graph.add_edge(GraphNode.GRAB_EMAILS.value, GraphNode.CLEAN_EMAILS.value)

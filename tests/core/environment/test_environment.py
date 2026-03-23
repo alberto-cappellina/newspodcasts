@@ -1,16 +1,18 @@
+from pathlib import Path
+
 import pytest
 
 from core.environment.environment import load_env_value, get_aws_access_key_id, get_openapi_key
 
 
-def test_load_env_value_returns_value(tmp_path):
+def test_load_env_value_returns_value(tmp_path: Path) -> None:
     env_file = tmp_path / ".env"
     env_file.write_text("MY_KEY=my_value\n")
 
     assert load_env_value("MY_KEY", str(env_file)) == "my_value"
 
 
-def test_load_env_value_raises_when_key_missing(tmp_path):
+def test_load_env_value_raises_when_key_missing(tmp_path: Path) -> None:
     env_file = tmp_path / ".env"
     env_file.write_text("OTHER_KEY=other\n")
 
@@ -18,12 +20,12 @@ def test_load_env_value_raises_when_key_missing(tmp_path):
         load_env_value("MISSING_KEY", str(env_file))
 
 
-def test_load_env_value_raises_when_file_missing():
+def test_load_env_value_raises_when_file_missing() -> None:
     with pytest.raises(Exception):
         load_env_value("ANY_KEY", "/nonexistent/.env")
 
 
-def test_aws_secret_access_key_returns_secret_str(tmp_path, monkeypatch):
+def test_aws_secret_access_key_returns_secret_str(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     env_file = tmp_path / ".env"
     env_file.write_text("AWS_SECRET_ACCESS_KEY=secret123\n")
     monkeypatch.chdir(tmp_path)
@@ -33,7 +35,7 @@ def test_aws_secret_access_key_returns_secret_str(tmp_path, monkeypatch):
     assert result.get_secret_value() == "secret123"
 
 
-def test_get_aws_access_key_id_returns_secret_str(tmp_path, monkeypatch):
+def test_get_aws_access_key_id_returns_secret_str(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     env_file = tmp_path / ".env"
     env_file.write_text("AWS_ACCESS_KEY_ID=keyid456\n")
     monkeypatch.chdir(tmp_path)
@@ -43,7 +45,7 @@ def test_get_aws_access_key_id_returns_secret_str(tmp_path, monkeypatch):
     assert result.get_secret_value() == "keyid456"
 
 
-def test_get_openapi_key_returns_secret_str(tmp_path, monkeypatch):
+def test_get_openapi_key_returns_secret_str(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     env_file = tmp_path / ".env"
     env_file.write_text("OPEN_API_KEY=openkey789\n")
     monkeypatch.chdir(tmp_path)

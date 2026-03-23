@@ -2,12 +2,12 @@ import tempfile
 import uuid
 
 
-def get_temp_path(with_extension:str):
+def get_temp_path(with_extension: str) -> str:
     tmp_path = f"{tempfile.gettempdir()}/{uuid.uuid4()}{with_extension}"
     return tmp_path
 
 
-def write_string_temp_file(mail_content: str):
+def write_string_temp_file(mail_content: str) -> str:
     return write_string_temp_file_at_path(
         path=get_temp_path(".txt"),
         mail_content=mail_content
@@ -16,7 +16,7 @@ def write_string_temp_file(mail_content: str):
 
 def write_string_temp_file_at_path(
         path: str,
-        mail_content: str):
+        mail_content: str) -> str:
     with open(path, "w") as temporary_file:
         temporary_file.write(mail_content)
 
