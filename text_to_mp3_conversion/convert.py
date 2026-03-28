@@ -1,7 +1,7 @@
 import boto3
 
 from core.environment.environment import get_aws_access_key_id, get_aws_secret_access_key
-from core.file_operations.file_writer import get_temp_path
+from core.file_operations.file_writer import get_temp_file_path
 
 POLLY_CHAR_LIMIT = 3000
 
@@ -64,7 +64,7 @@ def newsletter_to_audio(text_to_convert: str) -> str:
         )
         audio_bytes += response['AudioStream'].read()
 
-    file_path = get_temp_path(with_extension=".mp3")
+    file_path = get_temp_file_path(with_extension=".mp3")
     with open(file_path, 'wb') as f:
         f.write(audio_bytes)
 

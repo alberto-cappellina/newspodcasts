@@ -17,7 +17,8 @@ def convert_text_to_mp3(state: NewsPodcastState) -> dict:
 
         ready_file = ProcessingFile(
             path=converted_file,
-            podcast=file.podcast
+            podcast=file.podcast,
+            email=file.email
         )
 
         converted_files_list.append(ready_file)

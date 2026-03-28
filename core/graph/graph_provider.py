@@ -34,9 +34,9 @@ def provide_graph() -> Any:
 
 
     # START -> GRAB_EMAILS
-    #graph.add_edge(START, GraphNode.GRAB_EMAILS.value)
+    graph.add_edge(START, GraphNode.GRAB_EMAILS.value)
     #graph.add_edge(START,GraphNode.CONVERT_TEXT_FILES.value )
-    graph.add_edge(START,GraphNode.PUBLISH_MP3.value )
+    #graph.add_edge(START,GraphNode.PUBLISH_MP3.value )
 
     # GRAB_EMAILS -> CLEAN_EMAILS
     graph.add_edge(GraphNode.GRAB_EMAILS.value, GraphNode.CLEAN_EMAILS.value)

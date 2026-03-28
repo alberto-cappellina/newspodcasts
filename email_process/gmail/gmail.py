@@ -1,11 +1,15 @@
 import base64
 import os
+from email.utils import parsedate_to_datetime
 from typing import Any
 
+from google.auth.exceptions import RefreshError
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+
+from email_process.gmail.exceptions import TokenExpiredError
 
 from email_process.gmail.models import UnprocessedEmail
 
@@ -18,7 +22,10 @@ def get_service() -> Any:
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
+            try:
+                creds.refresh(Request())
+            except RefreshError:
+                raise TokenExpiredError()
         else:
             flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
             creds = flow.run_local_server(port=0)
@@ -43,10 +50,16 @@ def list_emails(service: Any, max_results: int = 10, query: str = "in:inbox") ->
         ).execute()
         headers = {h["name"]: h["value"] for h in detail["payload"]["headers"]}
         from_email = headers.get("From", "")
+        date_str = headers.get("Date")
+        try:
+            received_at = parsedate_to_datetime(date_str) if date_str else None
+        except Exception:
+            received_at = None
         emails.append(UnprocessedEmail(
             message_id=msg["id"],
             from_=from_email,
             subject=headers.get("Subject"),
+            received_at=received_at,
             matching_podcast=None
         ))
     return emails
